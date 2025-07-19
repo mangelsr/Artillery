@@ -51,5 +51,10 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Artillery.sln"
+    "dotnet.defaultSolution": "Artillery.sln",
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#111095",
+        "titleBar.activeBackground": "#1716D1",
+        "titleBar.activeForeground": "#FDFDFF"
+    }
 }
