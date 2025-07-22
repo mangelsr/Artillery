@@ -23,13 +23,14 @@ public class Cannon : MonoBehaviour
         if (rotation > 90) rotation = 90;
         if (rotation < 0) rotation = 0;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (GameManager.ShootsPerGame > 0 && Input.GetKeyDown(KeyCode.Space))
         {
             GameObject temp = Instantiate(ballPrefab, cannonTip.transform.position, transform.rotation);
             Rigidbody tempRB = temp.GetComponent<Rigidbody>();
             Vector3 shootDirection = transform.rotation.eulerAngles;
             shootDirection.y = 90 - shootDirection.x;
             tempRB.velocity = shootDirection.normalized * GameManager.BallSpeed;
+            GameManager.ShootsPerGame--;
         }
     }
 }
