@@ -3,6 +3,7 @@ using UnityEngine;
 public class Cannon : MonoBehaviour
 {
 
+    public static bool isBlocked;
     [SerializeField] GameObject ballPrefab;
     GameObject cannonTip;
     float rotation;
@@ -23,14 +24,16 @@ public class Cannon : MonoBehaviour
         if (rotation > 90) rotation = 90;
         if (rotation < 0) rotation = 0;
 
-        if (GameManager.ShootsPerGame > 0 && Input.GetKeyDown(KeyCode.Space))
+        if (!isBlocked && GameManager.ShootsPerGame > 0 && Input.GetKeyDown(KeyCode.Space))
         {
             GameObject temp = Instantiate(ballPrefab, cannonTip.transform.position, transform.rotation);
+            CameraFollow.objective = temp; 
             Rigidbody tempRB = temp.GetComponent<Rigidbody>();
             Vector3 shootDirection = transform.rotation.eulerAngles;
             shootDirection.y = 90 - shootDirection.x;
             tempRB.velocity = shootDirection.normalized * GameManager.BallSpeed;
             GameManager.ShootsPerGame--;
+            isBlocked = true;
         }
     }
 }

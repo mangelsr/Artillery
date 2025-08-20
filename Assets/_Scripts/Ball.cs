@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // The `Drag` property on the Rigid Body simulate air resistance
+    // `AngularDrag` same resistance during rotation
+
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
