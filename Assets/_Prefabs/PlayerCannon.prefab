@@ -99,7 +99,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfabee2e23086c268687800b5d5775c, type: 2}
+  - {fileID: 2100000, guid: a39a8cca85163c27e99af84c309d312a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -237,7 +237,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfabee2e23086c268687800b5d5775c, type: 2}
+  - {fileID: 2100000, guid: a39a8cca85163c27e99af84c309d312a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -536,7 +536,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1359759f019884d29bef75c8beabc13b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballPrefab: {fileID: 298420853216561416, guid: 5d2a57c6bbfadab44a504a1f6aef7434, type: 3}
+  ballPrefab: {fileID: 298420853216561416, guid: 9b084304aa6efc535be64ffb39675109, type: 3}
+  particlesPrefab: {fileID: 7895424848715115163, guid: b0ebbdf827e5ddcd891891559c3ec6fb, type: 3}
 --- !u!1 &7349081376847489126
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,7 +683,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfabee2e23086c268687800b5d5775c, type: 2}
+  - {fileID: 2100000, guid: a39a8cca85163c27e99af84c309d312a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
