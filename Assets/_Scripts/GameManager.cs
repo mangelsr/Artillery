@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] int _ballSpeed = 30;
-    [SerializeField] int _shootsPerGame = 10;
+    [SerializeField] int _shootsPerGame = 5;
     [SerializeField] float _rotationSpeed = 1;
 
     public static int BallSpeed
