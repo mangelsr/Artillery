@@ -52,3 +52,13 @@ Native Audio Plugin SDK for handling Audio in the most efficient way
 Open Source tool to edit Audio tracks
 
 Pro Tools is the industry standard software, but Audacity is a good option
+
+## New Input System
+
+Input System vs Input Manager
+
+Input Manger => Pool key mapped keys, hard to remap controls
+
+Input System => Uses an event system, very easy to remap controls and support multiple input types
+
+
