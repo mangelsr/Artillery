@@ -6,13 +6,17 @@ public class Cannon : MonoBehaviour
     public static bool isBlocked;
     [SerializeField] GameObject ballPrefab;
     [SerializeField] GameObject particlesPrefab;
-
+    [SerializeField] AudioClip shotClip;
+    GameObject shootSound;
+    AudioSource shootSource;
     GameObject cannonTip;
     float rotation;
 
     void Start()
     {
         cannonTip = transform.Find("CannonTip").gameObject;
+        shootSound = GameObject.Find("ShootSound");
+        shootSource = shootSound.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -26,7 +30,7 @@ public class Cannon : MonoBehaviour
         if (rotation > 90) rotation = 90;
         if (rotation < 0) rotation = 0;
 
-        if (!isBlocked && GameManager.ShootsPerGame > 0 && Input.GetKeyDown(KeyCode.Space))
+        if (GameManager.ShootsPerGame > 0 && Input.GetKeyDown(KeyCode.Space))
         {
             GameObject temp = Instantiate(ballPrefab, cannonTip.transform.position, transform.rotation);
             CameraFollow.objective = temp;
@@ -39,7 +43,8 @@ public class Cannon : MonoBehaviour
                 particlesPrefab, cannonTip.transform.position, Quaternion.Euler(particlesDirection), transform
             );
             GameManager.ShootsPerGame--;
-            isBlocked = true;
+            shootSource.PlayOneShot(shotClip);
+            // isBlocked = true;
         }
     }
 }
