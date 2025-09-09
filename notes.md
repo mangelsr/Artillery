@@ -61,4 +61,9 @@ Input Manger => Pool key mapped keys, hard to remap controls
 
 Input System => Uses an event system, very easy to remap controls and support multiple input types
 
+Input Actions Set => Entries Map
 
+Input Debugger
+Window > Analysis > Input Debugger
+
+Generic Map vs Specific Map
