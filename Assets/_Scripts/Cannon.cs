@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Cannon : MonoBehaviour
 {
@@ -12,6 +13,27 @@ public class Cannon : MonoBehaviour
     GameObject cannonTip;
     float rotation;
 
+    CannonControls controls;
+    InputAction aim;
+    InputAction changeShotForce;
+    InputAction shotAction;
+
+    void Awake()
+    {
+        controls = new CannonControls();
+    }
+
+    void OnEnable()
+    {
+        aim = controls.Cannon.Aim;
+        changeShotForce = controls.Cannon.ModifyShootForce;
+        shotAction = controls.Cannon.Shoot;
+        aim.Enable();
+        changeShotForce.Enable();
+        shotAction.Enable();
+        shotAction.performed += Shoot;
+    }
+
     void Start()
     {
         cannonTip = transform.Find("CannonTip").gameObject;
@@ -21,7 +43,7 @@ public class Cannon : MonoBehaviour
 
     void Update()
     {
-        rotation += Input.GetAxis("Horizontal") * GameManager.RotationSpeed;
+        rotation += aim.ReadValue<float>() * GameManager.RotationSpeed;
         if (rotation <= 90 && rotation >= 0)
         {
             transform.eulerAngles = new Vector3(rotation, 90, 0.0f);
@@ -29,22 +51,22 @@ public class Cannon : MonoBehaviour
 
         if (rotation > 90) rotation = 90;
         if (rotation < 0) rotation = 0;
+    }
 
-        if (GameManager.ShootsPerGame > 0 && Input.GetKeyDown(KeyCode.Space))
-        {
-            GameObject temp = Instantiate(ballPrefab, cannonTip.transform.position, transform.rotation);
-            CameraFollow.objective = temp;
-            Rigidbody tempRB = temp.GetComponent<Rigidbody>();
-            Vector3 shootDirection = transform.rotation.eulerAngles;
-            shootDirection.y = 90 - shootDirection.x;
-            tempRB.velocity = shootDirection.normalized * GameManager.BallSpeed;
-            Vector3 particlesDirection = new Vector3(-90 + shootDirection.x, 90, 9);
-            Instantiate(
-                particlesPrefab, cannonTip.transform.position, Quaternion.Euler(particlesDirection), transform
-            );
-            GameManager.ShootsPerGame--;
-            shootSource.PlayOneShot(shotClip);
-            // isBlocked = true;
-        }
+    void Shoot(InputAction.CallbackContext context)
+    {
+        GameObject temp = Instantiate(ballPrefab, cannonTip.transform.position, transform.rotation);
+        CameraFollow.objective = temp;
+        Rigidbody tempRB = temp.GetComponent<Rigidbody>();
+        Vector3 shootDirection = transform.rotation.eulerAngles;
+        shootDirection.y = 90 - shootDirection.x;
+        tempRB.velocity = shootDirection.normalized * GameManager.BallSpeed;
+        Vector3 particlesDirection = new Vector3(-90 + shootDirection.x, 90, 9);
+        Instantiate(
+            particlesPrefab, cannonTip.transform.position, Quaternion.Euler(particlesDirection), transform
+        );
+        GameManager.ShootsPerGame--;
+        shootSource.PlayOneShot(shotClip);
+        // isBlocked = true;
     }
 }

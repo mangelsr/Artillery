@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] int _ballSpeed = 30;
     [SerializeField] int _shootsPerGame = 5;
     [SerializeField] float _rotationSpeed = 1;
+    [SerializeField] GameObject WinCanvas;
+    [SerializeField] GameObject LoseCanvas;
 
     public static int BallSpeed
     {
@@ -17,7 +19,7 @@ public class GameManager : MonoBehaviour
     public static int ShootsPerGame
     {
         get => Instance._shootsPerGame;
-        set => Instance._shootsPerGame = Mathf.Max(0, value);
+        set => Instance._shootsPerGame = Mathf.Max(-1, value);
     }
 
     public static float RotationSpeed
@@ -36,5 +38,23 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("There is an existing instance of this class");
         }
+    }
+
+    void Update()
+    {
+        if (ShootsPerGame < 0)
+        {
+            LoseGame();
+        }
+    }
+
+    public void WinGame()
+    {
+        WinCanvas.SetActive(true);
+    }
+
+    void LoseGame()
+    {
+        LoseCanvas.SetActive(true);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -5,13 +6,28 @@ public class Ball : MonoBehaviour
     // The `Drag` property on the Rigid Body simulate air resistance
     // `AngularDrag` same resistance during rotation
 
-    void Start()
-    {
+    [SerializeField] GameObject explosionParticles;
 
+    void OnCollisionEnter(Collision collision)
+    {
+        string collisionTag = collision.gameObject.tag;
+
+        if (collisionTag == "Ground")
+        {
+            Invoke("Explode", 3);
+        }
+
+        if (collisionTag == "Obstacle" || collisionTag == "Objective")
+        {
+            Explode();
+        }
     }
 
-    void Update()
+    void Explode()
     {
-
+        Instantiate(explosionParticles, transform.position, Quaternion.identity);
+        Cannon.isBlocked = false;
+        CameraFollow.objective = null;
+        Destroy(gameObject);
     }
 }
