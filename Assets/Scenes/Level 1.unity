@@ -3434,7 +3434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ballSpeed: 30
-  _shootsPerGame: 3
+  _shootsPerGame: 5
   _rotationSpeed: 1
   WinCanvas: {fileID: 983751366}
   LoseCanvas: {fileID: 545099095}
