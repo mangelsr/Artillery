@@ -55,18 +55,22 @@ public class Cannon : MonoBehaviour
 
     void Shoot(InputAction.CallbackContext context)
     {
-        GameObject temp = Instantiate(ballPrefab, cannonTip.transform.position, transform.rotation);
-        CameraFollow.objective = temp;
-        Rigidbody tempRB = temp.GetComponent<Rigidbody>();
-        Vector3 shootDirection = transform.rotation.eulerAngles;
-        shootDirection.y = 90 - shootDirection.x;
-        tempRB.velocity = shootDirection.normalized * GameManager.BallSpeed;
-        Vector3 particlesDirection = new Vector3(-90 + shootDirection.x, 90, 9);
-        Instantiate(
-            particlesPrefab, cannonTip.transform.position, Quaternion.Euler(particlesDirection), transform
-        );
-        GameManager.ShootsPerGame--;
-        shootSource.PlayOneShot(shotClip);
-        // isBlocked = true;
+        if (GameManager.ShootsPerGame > 0 && !isBlocked)
+        {
+            GameObject temp = Instantiate(ballPrefab, cannonTip.transform.position, transform.rotation);
+            CameraFollow.objective = temp;
+            Rigidbody tempRB = temp.GetComponent<Rigidbody>();
+            Vector3 shootDirection = transform.rotation.eulerAngles;
+            shootDirection.y = 90 - shootDirection.x;
+            tempRB.velocity = shootDirection.normalized * GameManager.BallSpeed;
+            Vector3 particlesDirection = new Vector3(-90 + shootDirection.x, 90, 9);
+            Instantiate(
+                particlesPrefab, cannonTip.transform.position, Quaternion.Euler(particlesDirection), transform
+            );
+            GameManager.ShootsPerGame--;
+            shootSource.PlayOneShot(shotClip);
+            isBlocked = true;
+        }
+
     }
 }

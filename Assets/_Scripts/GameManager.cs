@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (ShootsPerGame < 0)
+        if (ShootsPerGame <= 0)
         {
             LoseGame();
         }
