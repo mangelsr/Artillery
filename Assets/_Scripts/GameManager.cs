@@ -4,16 +4,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] int _ballSpeed = 30;
+    [SerializeField] int _ballSpeed = 48;
     [SerializeField] int _shootsPerGame = 5;
     [SerializeField] float _rotationSpeed = 1;
-    [SerializeField] GameObject WinCanvas;
-    [SerializeField] GameObject LoseCanvas;
 
     public static int BallSpeed
     {
         get => Instance._ballSpeed;
-        set => Instance._ballSpeed = Mathf.Max(0, value);
+        set => Instance._ballSpeed = Mathf.Clamp(value, 25, 70);
     }
 
     public static int ShootsPerGame
@@ -50,11 +48,27 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
-        WinCanvas.SetActive(true);
+        GameObject winCanvas = FindObjectByName("WinCanvas");
+        if (winCanvas != null) winCanvas.SetActive(true);
     }
 
     void LoseGame()
     {
-        LoseCanvas.SetActive(true);
+        GameObject loseCanvas = FindObjectByName("LoseCanvas");
+        if (loseCanvas != null) loseCanvas.SetActive(true);
+    }
+
+    GameObject FindObjectByName(string objectName)
+    {
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.name == objectName && obj.scene == gameObject.scene)
+            {
+                return obj;
+            }
+        }
+        return null;
     }
 }

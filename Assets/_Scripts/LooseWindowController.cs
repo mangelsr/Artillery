@@ -11,6 +11,5 @@ public class LooseWindowController : MonoBehaviour
     public void RetryLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
     }
 }

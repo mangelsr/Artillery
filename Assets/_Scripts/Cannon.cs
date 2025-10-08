@@ -43,6 +43,8 @@ public class Cannon : MonoBehaviour
 
     void Update()
     {
+        GameManager.BallSpeed += (int)changeShotForce.ReadValue<float>();
+
         rotation += aim.ReadValue<float>() * GameManager.RotationSpeed;
         if (rotation <= 90 && rotation >= 0)
         {
@@ -71,6 +73,5 @@ public class Cannon : MonoBehaviour
             shootSource.PlayOneShot(shotClip);
             isBlocked = true;
         }
-
     }
 }
