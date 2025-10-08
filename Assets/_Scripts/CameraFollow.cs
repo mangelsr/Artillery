@@ -28,6 +28,8 @@ public class CameraFollow : MonoBehaviour
 
     void Awake()
     {
+        _objective = null;
+        onObjectiveChanged = null;
         camZ = this.transform.position.z;
     }
     void FixedUpdate()

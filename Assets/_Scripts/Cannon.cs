@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Cannon : MonoBehaviour
 {
@@ -12,6 +13,27 @@ public class Cannon : MonoBehaviour
     GameObject cannonTip;
     float rotation;
 
+    CannonControls controls;
+    InputAction aim;
+    InputAction changeShotForce;
+    InputAction shotAction;
+
+    void Awake()
+    {
+        controls = new CannonControls();
+    }
+
+    void OnEnable()
+    {
+        aim = controls.Cannon.Aim;
+        changeShotForce = controls.Cannon.ModifyShootForce;
+        shotAction = controls.Cannon.Shoot;
+        aim.Enable();
+        changeShotForce.Enable();
+        shotAction.Enable();
+        shotAction.performed += Shoot;
+    }
+
     void Start()
     {
         cannonTip = transform.Find("CannonTip").gameObject;
@@ -21,7 +43,9 @@ public class Cannon : MonoBehaviour
 
     void Update()
     {
-        rotation += Input.GetAxis("Horizontal") * GameManager.RotationSpeed;
+        GameManager.BallSpeed += (int)changeShotForce.ReadValue<float>();
+
+        rotation += aim.ReadValue<float>() * GameManager.RotationSpeed;
         if (rotation <= 90 && rotation >= 0)
         {
             transform.eulerAngles = new Vector3(rotation, 90, 0.0f);
@@ -29,8 +53,11 @@ public class Cannon : MonoBehaviour
 
         if (rotation > 90) rotation = 90;
         if (rotation < 0) rotation = 0;
+    }
 
-        if (GameManager.ShootsPerGame > 0 && Input.GetKeyDown(KeyCode.Space))
+    void Shoot(InputAction.CallbackContext context)
+    {
+        if (GameManager.ShootsPerGame > 0 && !isBlocked)
         {
             GameObject temp = Instantiate(ballPrefab, cannonTip.transform.position, transform.rotation);
             CameraFollow.objective = temp;
@@ -44,7 +71,7 @@ public class Cannon : MonoBehaviour
             );
             GameManager.ShootsPerGame--;
             shootSource.PlayOneShot(shotClip);
-            // isBlocked = true;
+            isBlocked = true;
         }
     }
 }
