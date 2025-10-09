@@ -539,6 +539,7 @@ MonoBehaviour:
   ballPrefab: {fileID: 298420853216561416, guid: 9b084304aa6efc535be64ffb39675109, type: 3}
   particlesPrefab: {fileID: 7895424848715115163, guid: b0ebbdf827e5ddcd891891559c3ec6fb, type: 3}
   shotClip: {fileID: 8300000, guid: c9022391f63249a30bfd2677ffa4c7af, type: 3}
+  cannonTip: {fileID: 2250194616714791856}
 --- !u!1 &7349081376847489126
 GameObject:
   m_ObjectHideFlags: 0

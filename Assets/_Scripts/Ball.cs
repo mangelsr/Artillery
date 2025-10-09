@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -7,6 +7,14 @@ public class Ball : MonoBehaviour
     // `AngularDrag` same resistance during rotation
 
     [SerializeField] GameObject explosionParticles;
+    [SerializeField] float autoDestroyTime = 10f;
+
+    Coroutine autoDestroyCoroutine;
+
+    void Start()
+    {
+        autoDestroyCoroutine = StartCoroutine(AutoDestroyAfterTime());
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -15,11 +23,32 @@ public class Ball : MonoBehaviour
         if (collisionTag == "Ground")
         {
             Invoke("Explode", 3);
+            StopAutoDestroy();
         }
 
         if (collisionTag == "Obstacle" || collisionTag == "Objective")
         {
             Explode();
+            StopAutoDestroy();
+        }
+    }
+
+    IEnumerator AutoDestroyAfterTime()
+    {
+        yield return new WaitForSeconds(autoDestroyTime);
+
+        if (this != null && gameObject != null)
+        {
+            Explode();
+        }
+    }
+
+    void StopAutoDestroy()
+    {
+        if (autoDestroyCoroutine != null)
+        {
+            StopCoroutine(autoDestroyCoroutine);
+            autoDestroyCoroutine = null;
         }
     }
 

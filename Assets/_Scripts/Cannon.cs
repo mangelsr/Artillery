@@ -74,4 +74,18 @@ public class Cannon : MonoBehaviour
             isBlocked = true;
         }
     }
+
+    void OnDisable()
+    {
+        if (shotAction != null)
+        {
+            shotAction.performed -= Shoot;
+            shotAction.Disable();
+        }
+        if (aim != null) aim.Disable();
+        if (changeShotForce != null) changeShotForce.Disable();
+        if (controls != null) controls.Disable();
+
+        if (CameraFollow.objective != null) CameraFollow.objective = null;
+    }
 }

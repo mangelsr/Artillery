@@ -147,3 +147,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionParticles: {fileID: 7633857181190790439, guid: ee3e9bd566179e4598cba6f128f8c046, type: 3}
+  autoDestroyTime: 6

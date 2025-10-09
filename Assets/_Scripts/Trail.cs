@@ -75,4 +75,9 @@ public class Trail : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        CameraFollow.onObjectiveChanged -= ObjectiveUpdate;
+    }
+
 }
