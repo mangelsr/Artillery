@@ -1,28 +1,85 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/**
+ * @brief Controls cannon behavior including aiming, shooting, and input handling
+ * Manages cannon rotation, ball projectile instantiation, and game state updates
+ */
 public class Cannon : MonoBehaviour
 {
-
+    /**
+     * @brief Static flag indicating if the cannon is currently blocked from shooting
+     */
     public static bool isBlocked;
+
+    /**
+     * @brief Prefab for the ball projectile to be instantiated when shooting
+     */
     [SerializeField] GameObject ballPrefab;
+
+    /**
+     * @brief Prefab for particle effects to be played when shooting
+     */
     [SerializeField] GameObject particlesPrefab;
+
+    /**
+     * @brief Audio clip to play when the cannon shoots
+     */
     [SerializeField] AudioClip shotClip;
+
+    /**
+     * @brief Reference to the GameObject containing the shoot sound audio source
+     */
     GameObject shootSound;
+
+    /**
+     * @brief AudioSource component for playing shoot sounds
+     */
     AudioSource shootSource;
+
+    /**
+     * @brief Reference to the cannon tip GameObject where projectiles spawn
+     */
     GameObject cannonTip;
+
+    /**
+     * @brief Current rotation angle of the cannon in degrees (0-90 range)
+     */
     float rotation;
 
+    /**
+     * @brief Input system controls for cannon actions
+     */
     CannonControls controls;
+
+    /**
+     * @brief Input action for aiming/rotating the cannon
+     */
     InputAction aim;
+
+    /**
+     * @brief Input action for modifying shot force/ball speed
+     */
     InputAction changeShotForce;
+
+    /**
+     * @brief Input action for triggering a shot
+     */
     InputAction shotAction;
 
+    /**
+     * @brief Initializes the input controls system
+     * Creates new instance of CannonControls input actions
+     */
     void Awake()
     {
         controls = new CannonControls();
     }
 
+    /**
+     * @brief Enables input actions and sets up event listeners
+     * Called when the GameObject becomes enabled and active
+     */
     void OnEnable()
     {
         aim = controls.Cannon.Aim;
@@ -34,6 +91,10 @@ public class Cannon : MonoBehaviour
         shotAction.performed += Shoot;
     }
 
+    /**
+     * @brief Initializes cannon components and references
+     * Finds cannon tip and audio components in the scene
+     */
     void Start()
     {
         cannonTip = transform.Find("CannonTip").gameObject;
@@ -41,6 +102,11 @@ public class Cannon : MonoBehaviour
         shootSource = shootSound.GetComponent<AudioSource>();
     }
 
+    /**
+     * @brief Updates cannon state each frame
+     * Handles rotation input and shot force modification
+     * Clamps rotation to valid range (0-90 degrees)
+     */
     void Update()
     {
         GameManager.BallSpeed += (int)changeShotForce.ReadValue<float>();
@@ -55,6 +121,12 @@ public class Cannon : MonoBehaviour
         if (rotation < 0) rotation = 0;
     }
 
+    /**
+     * @brief Handles the shoot action when triggered by input
+     * Instantiates a ball projectile, applies velocity, and updates game state
+     * 
+     * @param context Input action callback context containing input data
+     */
     void Shoot(InputAction.CallbackContext context)
     {
         if (GameManager.ShootsPerGame > 0 && !isBlocked)
@@ -75,6 +147,10 @@ public class Cannon : MonoBehaviour
         }
     }
 
+    /**
+     * @brief Disables input actions and cleans up event listeners
+     * Called when the GameObject becomes disabled or inactive
+     */
     void OnDisable()
     {
         if (shotAction != null)
