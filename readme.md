@@ -20,8 +20,6 @@ The repository is a standard Unity project with code primarily in **C#** and vis
 
 ## ✨ Key Features
 
-You can adjust this list to better match what you’ve implemented:
-
 - **Projectile-based combat**  
   Aim and shoot by adjusting launch parameters (angle, power, etc.).
 
@@ -74,8 +72,6 @@ At a high level, the repo follows a typical Unity layout:​:contentReference[oa
 - **Unity** – Any recent Unity version compatible with the project (ideally an LTS release).  
 - **Git** – (Optional) To clone the repository.  
 - **Doxygen** – (Optional) If you want to generate code documentation from `Doxyfile`.
-
-> Update this section with the exact Unity version you are using (for example: *Unity 2021.3 LTS*).
 
 ---
 
